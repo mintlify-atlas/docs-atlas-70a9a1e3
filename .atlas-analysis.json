@@ -1,0 +1,64 @@
+{
+  "projectType": "general",
+  "projectName": "Desktop Configuration Files",
+  "projectDescription": "Personal dotfiles for Neovim, Tmux, Alacritty, and AeroSpace window manager",
+  "theme": "aspen",
+  "primaryColor": "#7aa2f7",
+  "lightColor": "#9ece6a",
+  "darkColor": "#bb9af7",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Getting Started",
+        "pages": [
+          "introduction",
+          "installation"
+        ]
+      },
+      {
+        "group": "Configuration",
+        "pages": [
+          "config/neovim",
+          "config/alacritty",
+          "config/tmux",
+          "config/aerospace"
+        ]
+      },
+      {
+        "group": "Neovim Setup",
+        "pages": [
+          "neovim/plugins",
+          "neovim/keymaps",
+          "neovim/colorschemes",
+          "neovim/options"
+        ]
+      },
+      {
+        "group": "Reference",
+        "pages": [
+          "reference/alacritty-themes",
+          "reference/keybindings"
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "LazyVim-based Neovim configuration",
+    "Extensive Alacritty theme collection",
+    "Vim-style Tmux keybindings",
+    "AeroSpace tiling window manager setup",
+    "Obsidian.nvim integration",
+    "Custom colorscheme collection"
+  ],
+  "publicApiSurface": [
+    "nvim/init.lua",
+    "nvim/lua/config/lazy.lua",
+    "nvim/lua/config/options.lua",
+    "nvim/lua/config/keymaps.lua",
+    "nvim/lua/plugins/",
+    "alacritty/alacritty.toml",
+    "alacritty/themes/",
+    "tmux/tmux.conf",
+    "aerospace/aerospace.toml"
+  ]
+}
