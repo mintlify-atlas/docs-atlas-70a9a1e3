@@ -1,0 +1,141 @@
+---
+title: Introduction
+description: A modern, powerful dotfiles collection for developers who value efficiency and aesthetics
+---
+
+# Welcome to yangleyland/configs
+
+A carefully curated collection of configuration files that transform your development environment into a productivity powerhouse. Built on top of LazyVim, enhanced with extensive theming options, and optimized for a seamless workflow.
+
+## What's Inside
+
+<CardGroup cols={2}>
+  <Card title="Neovim Configuration" icon="code" href="/config/neovim">
+    LazyVim-based setup with Obsidian.nvim integration, custom colorschemes, and optimized for modern development
+  </Card>
+  
+  <Card title="Alacritty Themes" icon="palette" href="/config/alacritty">
+    150+ beautiful terminal themes to match any aesthetic preference, from Catppuccin to Tokyo Night
+  </Card>
+  
+  <Card title="Tmux Setup" icon="terminal" href="/config/tmux">
+    Vim-style keybindings with Catppuccin theme and optimized for terminal multiplexing
+  </Card>
+  
+  <Card title="AeroSpace WM" icon="window-maximize" href="/config/aerospace">
+    Tiling window manager configuration for macOS with Vim-inspired navigation
+  </Card>
+</CardGroup>
+
+## Key Features
+
+### LazyVim Foundation
+
+Built on the powerful [LazyVim](https://lazyvim.github.io/) starter template, providing a solid, performant base with sensible defaults and lazy-loading for optimal startup times.
+
+### Extensive Theme Collection
+
+With **151 Alacritty themes** included, you can easily switch between aesthetics to match your mood or workspace:
+
+- Catppuccin (Mocha, Latte, Frappe, Macchiato)
+- Tokyo Night variants
+- Gruvbox (Dark & Light)
+- Nord & Nordic
+- Rose Pine family
+- And 140+ more
+
+### Obsidian.nvim Integration
+
+Seamlessly work with your Obsidian vault directly from Neovim:
+
+```lua
+workspaces = {
+  {
+    name = "personal",
+    path = "~/Documents/vault",
+  },
+}
+```
+
+### Vim-Centric Workflow
+
+Consistent Vim keybindings across all tools:
+
+- **Tmux**: Vi mode in copy mode, Vim-style pane navigation
+- **AeroSpace**: `alt-h/j/k/l` for window focus, matching Vim movements
+- **Neovim**: Full LazyVim keybinding suite
+
+## Quick Preview
+
+### Alacritty Configuration
+
+```toml
+general.import = [
+    "~/.config/alacritty/themes/themes/coolnight.toml"
+]
+
+[window]
+padding.x = 10
+padding.y = 10
+opacity = 0.8
+blur = true
+
+[font]
+normal.family = "0xProto Nerd Font Mono"
+size = 16
+```
+
+### Tmux Vim Bindings
+
+```bash
+# Vim keybindings in copy mode
+setw -g mode-keys vi
+
+# Vim-like selection and copy
+bind-key -T copy-mode-vi 'v' send -X begin-selection
+bind-key -T copy-mode-vi 'y' send -X copy-selection
+```
+
+## Who Is This For?
+
+This configuration is ideal for:
+
+- Developers who love Vim/Neovim and want consistency across their toolchain
+- Theme enthusiasts who enjoy customizing their terminal aesthetics
+- macOS users looking for a tiling window manager experience
+- Obsidian users who want to edit notes without leaving the terminal
+- Anyone seeking a battle-tested, well-organized dotfiles structure
+
+## Philosophy
+
+These configurations prioritize:
+
+1. **Simplicity**: Clean, readable configuration files
+2. **Performance**: Lazy-loading and optimized startup times
+3. **Consistency**: Vim keybindings across all tools
+4. **Aesthetics**: Beautiful themes and visual harmony
+5. **Productivity**: Thoughtful defaults that reduce friction
+
+<Note>
+  These dotfiles are personal configurations shared for inspiration. Feel free to fork and customize them to match your workflow.
+</Note>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Installation" icon="download" href="/installation">
+    Get started with step-by-step installation instructions
+  </Card>
+  
+  <Card title="Neovim Plugins" icon="puzzle-piece" href="/neovim/plugins">
+    Explore the plugin ecosystem and customizations
+  </Card>
+  
+  <Card title="Keybindings" icon="keyboard" href="/reference/keybindings">
+    Complete reference of all keyboard shortcuts
+  </Card>
+  
+  <Card title="Alacritty Themes" icon="swatchbook" href="/reference/alacritty-themes">
+    Browse all 150+ available terminal themes
+  </Card>
+</CardGroup>

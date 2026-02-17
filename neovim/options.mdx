@@ -1,0 +1,508 @@
+---
+title: "Options"
+description: "Neovim editor settings and global options configuration"
+---
+
+This configuration uses LazyVim's default options with minimal custom overrides.
+
+## Configuration File
+
+Options are defined in `lua/config/options.lua`, which is automatically loaded before lazy.nvim startup.
+
+```lua
+-- Options are automatically loaded before lazy.nvim startup
+-- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
+-- Add any additional options here
+-- vim.g.snacks_animate = false
+vim.g.root_spec = { "cwd" }
+```
+
+Location: `lua/config/options.lua:1-6`
+
+<Note>
+This configuration primarily uses LazyVim defaults. Only `root_spec` is customized.
+</Note>
+
+---
+
+## Custom Options
+
+### Root Directory Specification
+
+```lua
+vim.g.root_spec = { "cwd" }
+```
+
+Location: `lua/config/options.lua:5`
+
+<ParamField path="vim.g.root_spec" type="table" default='{ "lsp", ".git", "cwd" }'>
+  Defines how LazyVim determines the project root directory.
+  
+  **Default behavior:** Searches for LSP workspace, then `.git`, then current working directory.
+  
+  **This config:** Always uses current working directory (`cwd`) as root.
+</ParamField>
+
+**Why this matters:**
+- Affects where file searches start (`:Telescope find_files`, etc.)
+- Determines which directory formatters and linters run in
+- Controls LSP workspace detection
+- Impacts terminal and git command paths
+
+<Accordion title="Available root_spec Options">
+| Value | Behavior |
+|-------|----------|
+| `"lsp"` | Use LSP workspace root |
+| `".git"` | Find nearest `.git` directory |
+| `"cwd"` | Use current working directory |
+| `{ ".git", "package.json" }` | Search for multiple patterns |
+
+**Example configurations:**
+
+```lua
+-- Default LazyVim behavior
+vim.g.root_spec = { "lsp", ".git", "cwd" }
+
+-- Always use git root
+vim.g.root_spec = { ".git" }
+
+-- Use git, fallback to cwd
+vim.g.root_spec = { ".git", "cwd" }
+
+-- Custom patterns
+vim.g.root_spec = { ".git", "package.json", "Cargo.toml", "pyproject.toml" }
+```
+</Accordion>
+
+---
+
+### Disabled Options
+
+```lua
+-- vim.g.snacks_animate = false
+```
+
+Location: `lua/config/options.lua:4`
+
+This line is commented out but shows how to disable snacks.nvim animations if desired.
+
+<Accordion title="Enable/Disable Animations">
+**To disable animations:**
+
+```lua
+vim.g.snacks_animate = false
+```
+
+**Effects:**
+- Disables smooth scrolling animations
+- Disables window transition animations
+- Faster UI updates
+- Better for slower terminals or preference for instant feedback
+</Accordion>
+
+---
+
+## LazyVim Default Options
+
+The configuration inherits comprehensive defaults from LazyVim. Here are the key settings:
+
+<Tabs>
+  <Tab title="General">
+    ### General Settings
+    
+    ```lua
+    vim.g.mapleader = " "          -- Leader key is Space
+    vim.g.maplocalleader = "\\"    -- Local leader
+    
+    vim.opt.autowrite = true        -- Auto write before commands
+    vim.opt.clipboard = "unnamedplus" -- Use system clipboard
+    vim.opt.completeopt = "menu,menuone,noselect"
+    vim.opt.confirm = true          -- Confirm before closing unsaved
+    vim.opt.mouse = "a"             -- Enable mouse support
+    vim.opt.timeoutlen = 300        -- Faster key sequence completion
+    vim.opt.undofile = true         -- Persistent undo
+    vim.opt.undolevels = 10000      -- Maximum undo history
+    ```
+  </Tab>
+  
+  <Tab title="UI">
+    ### UI Settings
+    
+    ```lua
+    vim.opt.cmdheight = 1           -- Command line height
+    vim.opt.conceallevel = 2        -- Conceal text (useful for markdown)
+    vim.opt.cursorline = true       -- Highlight current line
+    vim.opt.number = true           -- Show line numbers
+    vim.opt.relativenumber = true   -- Relative line numbers
+    vim.opt.ruler = false           -- Don't show ruler (statusline has it)
+    vim.opt.showmode = false        -- Don't show mode (statusline has it)
+    vim.opt.signcolumn = "yes"      -- Always show sign column
+    vim.opt.splitbelow = true       -- Horizontal splits go below
+    vim.opt.splitright = true       -- Vertical splits go right
+    vim.opt.termguicolors = true    -- True color support
+    vim.opt.wrap = false            -- No line wrapping
+    ```
+  </Tab>
+  
+  <Tab title="Editing">
+    ### Editing Settings
+    
+    ```lua
+    vim.opt.expandtab = true        -- Use spaces instead of tabs
+    vim.opt.shiftwidth = 2          -- Size of indent
+    vim.opt.tabstop = 2             -- Number of spaces per tab
+    vim.opt.shiftround = true       -- Round indent to multiple of shiftwidth
+    vim.opt.smartindent = true      -- Smart auto-indenting
+    
+    vim.opt.formatoptions = "jcroqlnt" -- Format options
+    vim.opt.grepformat = "%f:%l:%c:%m" -- Grep format
+    vim.opt.grepprg = "rg --vimgrep" -- Use ripgrep for :grep
+    
+    vim.opt.ignorecase = true       -- Ignore case in search
+    vim.opt.smartcase = true        -- Unless uppercase is used
+    vim.opt.inccommand = "nosplit"  -- Preview substitutions
+    ```
+  </Tab>
+  
+  <Tab title="Performance">
+    ### Performance Settings
+    
+    ```lua
+    vim.opt.lazyredraw = false      -- Don't skip redraws
+    vim.opt.updatetime = 200        -- Faster completion (CursorHold)
+    vim.opt.timeout = true
+    vim.opt.timeoutlen = 300        -- Faster key sequences
+    
+    -- Disable some built-in plugins for performance
+    vim.g.loaded_gzip = 1
+    vim.g.loaded_tar = 1
+    vim.g.loaded_tarPlugin = 1
+    vim.g.loaded_zipPlugin = 1
+    vim.g.loaded_2html_plugin = 1
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+    ```
+  </Tab>
+  
+  <Tab title="Scrolling">
+    ### Scrolling Settings
+    
+    ```lua
+    vim.opt.scrolloff = 4           -- Lines to keep above/below cursor
+    vim.opt.sidescrolloff = 8       -- Columns to keep left/right of cursor
+    vim.opt.smoothscroll = true     -- Smooth scrolling
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Adding Custom Options
+
+To add your own options, edit `lua/config/options.lua`:
+
+<Accordion title="Example Custom Options">
+```lua
+-- Options are automatically loaded before lazy.nvim startup
+-- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
+-- Add any additional options here
+
+-- Custom root specification
+vim.g.root_spec = { "cwd" }
+
+-- Disable animations (optional)
+-- vim.g.snacks_animate = false
+
+-- Custom editor options
+vim.opt.colorcolumn = "80"        -- Show column at 80 characters
+vim.opt.list = true               -- Show whitespace characters
+vim.opt.listchars = {             -- Which characters to show
+  tab = "→ ",
+  trail = "·",
+  extends = "⟩",
+  precedes = "⟨",
+  nbsp = "␣",
+}
+
+-- Folding
+vim.opt.foldmethod = "expr"       -- Use treesitter for folding
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = false        -- Don't fold by default
+
+-- Diff mode
+vim.opt.diffopt:append("vertical") -- Vertical diff splits
+
+-- Spell checking
+vim.opt.spell = false             -- Disable spell check by default
+vim.opt.spelllang = "en_us"       -- Spell check language
+
+-- Sessions
+vim.opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+
+-- Additional file types to ignore
+vim.opt.wildignore:append({ "*.pyc", "*.o", "*.obj", "*.swp", "*.class" })
+```
+</Accordion>
+
+---
+
+## Option Categories
+
+### Global Options (`vim.g`)
+
+Global variables that affect editor behavior:
+
+```lua
+vim.g.mapleader = " "           -- Leader key
+vim.g.root_spec = { "cwd" }     -- Project root detection
+vim.g.snacks_animate = false    -- Disable animations (optional)
+```
+
+### Buffer/Window Options (`vim.opt`)
+
+Editor behavior options:
+
+```lua
+vim.opt.number = true           -- Show line numbers
+vim.opt.relativenumber = true   -- Relative line numbers
+vim.opt.tabstop = 2             -- Tab width
+```
+
+### Buffer-Local (`vim.bo`)
+
+Options specific to a buffer:
+
+```lua
+vim.bo.filetype = "lua"
+vim.bo.expandtab = true
+```
+
+### Window-Local (`vim.wo`)
+
+Options specific to a window:
+
+```lua
+vim.wo.number = true
+vim.wo.wrap = false
+```
+
+---
+
+## Viewing Current Options
+
+### Check a Specific Option
+
+```vim
+:set number?
+:set tabstop?
+:echo g:root_spec
+```
+
+### View All Options
+
+```vim
+:set all
+:options
+```
+
+### Search Options
+
+```vim
+:set <pattern>
+:set rnu?        " Check relativenumber
+:set tab<Tab>    " Tab complete to see tab-related options
+```
+
+---
+
+## Option Overrides by Filetype
+
+LazyVim automatically sets filetype-specific options. You can override them in `lua/config/autocmds.lua`:
+
+<Accordion title="Filetype-Specific Options Example">
+```lua
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "python" },
+  callback = function()
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown" },
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "go" },
+  callback = function()
+    vim.opt_local.expandtab = false  -- Use tabs for Go
+    vim.opt_local.tabstop = 4
+  end,
+})
+```
+</Accordion>
+
+---
+
+## Common Option Modifications
+
+<Tabs>
+  <Tab title="Indentation">
+    ### Change Indentation Settings
+    
+    **Use 4 spaces instead of 2:**
+    
+    ```lua
+    vim.opt.tabstop = 4
+    vim.opt.shiftwidth = 4
+    ```
+    
+    **Use tabs instead of spaces:**
+    
+    ```lua
+    vim.opt.expandtab = false
+    vim.opt.tabstop = 4
+    ```
+  </Tab>
+  
+  <Tab title="Line Numbers">
+    ### Customize Line Numbers
+    
+    **Absolute line numbers only:**
+    
+    ```lua
+    vim.opt.number = true
+    vim.opt.relativenumber = false
+    ```
+    
+    **No line numbers:**
+    
+    ```lua
+    vim.opt.number = false
+    vim.opt.relativenumber = false
+    ```
+    
+    **Toggle with keymap:**
+    
+    ```lua
+    vim.keymap.set("n", "<leader>un", function()
+      vim.opt.number = not vim.opt.number:get()
+    end, { desc = "Toggle line numbers" })
+    ```
+  </Tab>
+  
+  <Tab title="Wrapping">
+    ### Line Wrapping
+    
+    **Enable line wrap:**
+    
+    ```lua
+    vim.opt.wrap = true
+    vim.opt.linebreak = true  -- Wrap at word boundaries
+    ```
+    
+    **Hard wrap at column:**
+    
+    ```lua
+    vim.opt.textwidth = 80
+    vim.opt.colorcolumn = "80"
+    ```
+  </Tab>
+  
+  <Tab title="Clipboard">
+    ### Clipboard Options
+    
+    **Use system clipboard:**
+    
+    ```lua
+    vim.opt.clipboard = "unnamedplus"  -- Default in LazyVim
+    ```
+    
+    **Don't use system clipboard:**
+    
+    ```lua
+    vim.opt.clipboard = ""
+    ```
+    
+    **Use different registers:**
+    
+    ```lua
+    vim.opt.clipboard = "unnamed"  -- Use * register instead of +
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Configuration Summary
+
+<Note>
+**Custom Options:**
+- `vim.g.root_spec = { "cwd" }` - Always use current working directory as root
+
+**LazyVim Defaults:**
+- 2-space indentation with spaces
+- Relative line numbers enabled
+- System clipboard integration
+- True color terminal support
+- Auto-save on certain commands
+- No line wrapping
+- Persistent undo
+
+**File Location:** `lua/config/options.lua`
+</Note>
+
+---
+
+## Troubleshooting
+
+<Accordion title="Option not taking effect">
+  ### Check Load Order
+  
+  Options in `lua/config/options.lua` load before plugins. If a plugin overrides your option:
+  
+  1. Check if the plugin has its own configuration
+  2. Move your option to an autocmd that fires after plugin load
+  3. Use `vim.opt_local` in an autocommand for buffer-specific settings
+</Accordion>
+
+<Accordion title="Option value is unexpected">
+  ### Debug Option Value
+  
+  ```vim
+  :verbose set option?
+  ```
+  
+  This shows where the option was last set.
+  
+  Example:
+  ```vim
+  :verbose set tabstop?
+  ```
+</Accordion>
+
+<Accordion title="Need filetype-specific options">
+  ### Use Autocmds
+  
+  Don't set filetype options in `options.lua`. Use `autocmds.lua` instead:
+  
+  ```lua
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "python",
+    callback = function()
+      vim.opt_local.tabstop = 4
+    end,
+  })
+  ```
+</Accordion>
+
+## Related Pages
+
+- [Plugins](/neovim/plugins) - Plugin configurations
+- [Keymaps](/neovim/keymaps) - Keyboard shortcuts  
+- [Colorschemes](/neovim/colorschemes) - Theme settings

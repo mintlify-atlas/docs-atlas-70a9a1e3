@@ -1,0 +1,479 @@
+---
+title: "Colorschemes"
+description: "Available color themes and colorscheme configuration"
+---
+
+This configuration includes multiple colorscheme options with **onedark** set as the default theme.
+
+## Configuration File
+
+Colorschemes are defined in `lua/plugins/colorscheme.lua`.
+
+```lua
+return {
+  { "rebelot/kanagawa.nvim" },
+  { "NLKNguyen/papercolor-theme" },
+  { "ellisonleao/gruvbox.nvim" },
+  { "rose-pine/neovim" },
+  { "tiagovla/tokyodark.nvim" },
+  { "sainnhe/everforest" },
+  {
+    "navarasu/onedark.nvim",
+    opts = {
+      highlights = {
+        Visual = { bg = "#ffff00" },
+      },
+    },
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "onedark",
+    },
+  },
+}
+```
+
+Location: `lua/plugins/colorscheme.lua:1-23`
+
+---
+
+## Installed Colorschemes
+
+<Tabs>
+  <Tab title="Onedark (Default)">
+    ### Onedark
+    
+    **Repository:** [navarasu/onedark.nvim](https://github.com/navarasu/onedark.nvim)
+    
+    A dark Neovim theme inspired by Atom's One Dark theme. This is the **active colorscheme** in the configuration.
+    
+    #### Custom Highlights
+    
+    ```lua
+    {
+      "navarasu/onedark.nvim",
+      opts = {
+        highlights = {
+          Visual = { bg = "#ffff00" },
+        },
+      },
+    }
+    ```
+    
+    Location: `lua/plugins/colorscheme.lua:9-16`
+    
+    <Note>
+    The visual selection background is customized to bright yellow (`#ffff00`) for better visibility.
+    </Note>
+    
+    #### Features
+    - Deep warm color palette
+    - Excellent syntax highlighting
+    - Support for LSP, Treesitter, and popular plugins
+    - Multiple style variants available
+    
+    #### Preview
+    
+    Dark theme with warm tones, excellent for long coding sessions.
+  </Tab>
+  
+  <Tab title="Kanagawa">
+    ### Kanagawa
+    
+    **Repository:** [rebelot/kanagawa.nvim](https://github.com/rebelot/kanagawa.nvim)
+    
+    ```lua
+    { "rebelot/kanagawa.nvim" }
+    ```
+    
+    A dark colorscheme inspired by the colors of the famous painting "The Great Wave off Kanagawa".
+    
+    #### Features
+    - Soft, muted colors inspired by traditional Japanese art
+    - Three variants: wave (default), dragon, lotus
+    - Extensive plugin support
+    - Beautiful terminal colors
+    
+    #### Switch to Kanagawa
+    
+    ```lua
+    {
+      "LazyVim/LazyVim",
+      opts = {
+        colorscheme = "kanagawa",
+      },
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Gruvbox">
+    ### Gruvbox
+    
+    **Repository:** [ellisonleao/gruvbox.nvim](https://github.com/ellisonleao/gruvbox.nvim)
+    
+    ```lua
+    { "ellisonleao/gruvbox.nvim" }
+    ```
+    
+    A retro groove colorscheme with pastel colors.
+    
+    #### Features
+    - Warm, earthy color palette
+    - Light and dark variants
+    - High contrast for readability
+    - Very popular in the Vim community
+    
+    #### Switch to Gruvbox
+    
+    ```lua
+    {
+      "LazyVim/LazyVim",
+      opts = {
+        colorscheme = "gruvbox",
+      },
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Rose Pine">
+    ### Rose Pine
+    
+    **Repository:** [rose-pine/neovim](https://github.com/rose-pine/neovim)
+    
+    ```lua
+    { "rose-pine/neovim" }
+    ```
+    
+    A Soho vibes colorscheme for Neovim.
+    
+    #### Features
+    - Three variants: main, moon, dawn
+    - Low to medium contrast
+    - Soft, muted colors
+    - Extensive customization options
+    
+    #### Switch to Rose Pine
+    
+    ```lua
+    {
+      "LazyVim/LazyVim",
+      opts = {
+        colorscheme = "rose-pine",
+      },
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Other Themes">
+    ### PaperColor
+    
+    **Repository:** [NLKNguyen/papercolor-theme](https://github.com/NLKNguyen/papercolor-theme)
+    
+    ```lua
+    { "NLKNguyen/papercolor-theme" }
+    ```
+    
+    Light and dark themes inspired by Google's Material Design.
+    
+    ---
+    
+    ### TokyoDark
+    
+    **Repository:** [tiagovla/tokyodark.nvim](https://github.com/tiagovla/tokyodark.nvim)
+    
+    ```lua
+    { "tiagovla/tokyodark.nvim" }
+    ```
+    
+    A clean, dark Neovim theme written in Lua.
+    
+    ---
+    
+    ### Everforest
+    
+    **Repository:** [sainnhe/everforest](https://github.com/sainnhe/everforest)
+    
+    ```lua
+    { "sainnhe/everforest" }
+    ```
+    
+    A green-based colorscheme designed to be warm and soft.
+  </Tab>
+</Tabs>
+
+---
+
+## Changing Colorschemes
+
+### Method 1: Runtime Switch (Temporary)
+
+Switch colorschemes during your session:
+
+```vim
+:colorscheme kanagawa
+:colorscheme gruvbox
+:colorscheme rose-pine
+:colorscheme everforest
+:colorscheme tokyodark
+```
+
+This change is temporary and will reset when you restart Neovim.
+
+### Method 2: Persistent Configuration
+
+Edit `lua/plugins/colorscheme.lua` and change the default:
+
+<Accordion title="Example: Switch to Kanagawa">
+```lua
+return {
+  { "rebelot/kanagawa.nvim" },
+  { "NLKNguyen/papercolor-theme" },
+  { "ellisonleao/gruvbox.nvim" },
+  { "rose-pine/neovim" },
+  { "tiagovla/tokyodark.nvim" },
+  { "sainnhe/everforest" },
+  {
+    "navarasu/onedark.nvim",
+    opts = {
+      highlights = {
+        Visual = { bg = "#ffff00" },
+      },
+    },
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "kanagawa",  -- Changed from "onedark"
+    },
+  },
+}
+```
+</Accordion>
+
+### Method 3: LazyVim Picker
+
+Use the built-in colorscheme picker:
+
+```vim
+<leader>uC
+```
+
+Or via command:
+
+```vim
+:Telescope colorscheme
+```
+
+---
+
+## Customizing Colorschemes
+
+### Modifying Highlight Groups
+
+You can customize any installed colorscheme by modifying its `opts` table:
+
+```lua
+{
+  "navarasu/onedark.nvim",
+  opts = {
+    style = "dark", -- dark, darker, cool, deep, warm, warmer
+    transparent = false,
+    highlights = {
+      Visual = { bg = "#ffff00" },
+      CursorLine = { bg = "#2d3139" },
+      LineNr = { fg = "#4b5263" },
+    },
+  },
+}
+```
+
+### Example: Transparent Background
+
+<Accordion title="Make Background Transparent">
+```lua
+{
+  "navarasu/onedark.nvim",
+  opts = {
+    transparent = true,
+    highlights = {
+      Visual = { bg = "#ffff00" },
+    },
+  },
+}
+```
+</Accordion>
+
+### Example: Customize Rose Pine
+
+<Accordion title="Rose Pine Customization">
+```lua
+{
+  "rose-pine/neovim",
+  name = "rose-pine",
+  opts = {
+    variant = "moon", -- auto, main, moon, or dawn
+    dark_variant = "moon",
+    disable_italics = false,
+    highlight_groups = {
+      Visual = { bg = "surface" },
+    },
+  },
+}
+```
+</Accordion>
+
+---
+
+## LazyVim Colorscheme Integration
+
+### Install Fallback
+
+Lazy.nvim is configured with fallback colorschemes during installation:
+
+```lua
+install = { colorscheme = { "tokyonight", "habamax" } }
+```
+
+Location: `lua/config/lazy.lua:33`
+
+This ensures a colorscheme is available even if plugins fail to install.
+
+### Setting the Active Theme
+
+The active colorscheme is set via LazyVim configuration:
+
+```lua
+{
+  "LazyVim/LazyVim",
+  opts = {
+    colorscheme = "onedark",
+  },
+}
+```
+
+Location: `lua/plugins/colorscheme.lua:18-22`
+
+---
+
+## Adding New Colorschemes
+
+To add a new colorscheme:
+
+1. Add the plugin to `lua/plugins/colorscheme.lua`:
+
+```lua
+return {
+  -- ... existing themes ...
+  { "catppuccin/nvim", name = "catppuccin" },
+  
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "catppuccin",  -- Set as default
+    },
+  },
+}
+```
+
+2. Restart Neovim or run:
+
+```vim
+:Lazy sync
+```
+
+3. Switch to the new theme:
+
+```vim
+:colorscheme catppuccin
+```
+
+---
+
+## Colorscheme Comparison
+
+| Theme | Style | Contrast | Best For |
+|-------|-------|----------|----------|
+| **Onedark** | Warm dark | Medium | General purpose, long sessions |
+| **Kanagawa** | Muted dark | Low-Medium | Artistic, easy on eyes |
+| **Gruvbox** | Retro warm | High | High readability, nostalgia |
+| **Rose Pine** | Soft dark | Low-Medium | Low contrast preference |
+| **TokyoDark** | Clean dark | Medium | Modern, minimal |
+| **Everforest** | Green-based | Medium | Nature-inspired, warm |
+| **PaperColor** | Material | High | Light theme option |
+
+---
+
+## Troubleshooting
+
+<Accordion title="Colors look wrong in terminal">
+  ### Terminal Color Support
+  
+  Ensure your terminal supports 24-bit true color:
+  
+  ```lua
+  vim.opt.termguicolors = true
+  ```
+  
+  This is enabled by default in LazyVim.
+  
+  Test true color support:
+  ```bash
+  curl -s https://gist.githubusercontent.com/lifepillar/09a44b8cf0f9397465614e622979107f/raw/24-bit-color.sh | bash
+  ```
+</Accordion>
+
+<Accordion title="Colorscheme not loading">
+  ### Plugin Not Installed
+  
+  Check if the colorscheme plugin is installed:
+  
+  ```vim
+  :Lazy
+  ```
+  
+  Look for the colorscheme plugin and ensure it's loaded (green checkmark).
+  
+  Force reinstall:
+  ```vim
+  :Lazy clean
+  :Lazy sync
+  ```
+</Accordion>
+
+<Accordion title="Custom highlights not applying">
+  ### Load Order Issue
+  
+  Ensure your colorscheme configuration has priority:
+  
+  ```lua
+  {
+    "navarasu/onedark.nvim",
+    priority = 1000,  -- Load early
+    opts = {
+      highlights = {
+        Visual = { bg = "#ffff00" },
+      },
+    },
+  }
+  ```
+</Accordion>
+
+---
+
+## Current Configuration Summary
+
+<Note>
+**Active Colorscheme:** onedark
+
+**Custom Modifications:**
+- Visual selection background: `#ffff00` (bright yellow)
+
+**Available Themes:** kanagawa, papercolor, gruvbox, rose-pine, tokyodark, everforest, onedark
+</Note>
+
+## Related Pages
+
+- [Plugins](/neovim/plugins) - All plugin configurations
+- [Options](/neovim/options) - Editor settings
+- [Keymaps](/neovim/keymaps) - Keyboard shortcuts

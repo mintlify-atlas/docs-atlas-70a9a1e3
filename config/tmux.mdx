@@ -1,0 +1,389 @@
+---
+title: Tmux Configuration
+description: Terminal multiplexer configuration with Vim keybindings and Catppuccin theme
+---
+
+## Overview
+
+Tmux is a terminal multiplexer that allows you to manage multiple terminal sessions within a single window. This configuration emphasizes Vim-like keybindings, true color support, and modern aesthetics with the Catppuccin theme.
+
+## Configuration File
+
+Configuration is stored in `tmux/tmux.conf`:
+
+```bash
+# Terminal and color support
+set-option -sa terminal-overrides ",xterm*:Tc:RGB:sitm=\E[3m:ritm=\E[23m"
+set -g default-terminal "tmux-256color"
+set -ga terminal-overrides ',xterm-256color:Tc'
+
+# Window management
+set -g renumber-windows on
+set -g base-index 1
+
+# Prefix key
+unbind C-b
+set -g prefix C-Space
+bind C-Space send-prefix
+
+# Vim keybindings in copy mode
+setw -g mode-keys vi
+
+# Performance
+set-option -sg escape-time 10
+set-option -g focus-events on
+set -g mouse on
+
+# Copy mode bindings
+bind-key [ copy-mode
+bind-key -T copy-mode-vi 'v' send -X begin-selection
+bind-key -T copy-mode-vi 'y' send -X copy-selection
+bind-key -T copy-mode-vi 'V' send -X rectangle-toggle
+
+# Plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
+
+run '~/.tmux/plugins/tpm/tpm'
+```
+
+## Terminal Configuration
+
+### True Color Support
+
+```bash
+set-option -sa terminal-overrides ",xterm*:Tc:RGB:sitm=\E[3m:ritm=\E[23m"
+set -g default-terminal "tmux-256color"
+set -ga terminal-overrides ',xterm-256color:Tc'
+set -as terminal-overrides ',xterm*:sitm=\E[3m'
+```
+
+<Note>
+  These settings enable true color (24-bit) support and proper italic rendering, ensuring your terminal colors match your theme exactly.
+</Note>
+
+<Accordion title="Why Multiple Terminal Overrides?">
+  - **First override**: Adds true color (`Tc`), RGB support, and italic (`sitm`/`ritm`) capabilities
+  - **default-terminal**: Sets the base terminal type for compatibility
+  - **Second override**: Ensures true color works specifically with xterm-256color
+  - **Third override**: Additional italic support for xterm variants
+  
+  This layered approach ensures compatibility across different terminal emulators.
+</Accordion>
+
+## Prefix Key
+
+### Custom Prefix: Ctrl+Space
+
+```bash
+unbind C-b
+set -g prefix C-Space
+bind C-Space send-prefix
+```
+
+<Tabs>
+  <Tab title="Why Change?">
+    - `Ctrl+b` (default) conflicts with many applications
+    - `Ctrl+Space` is easier to reach
+    - More comfortable for frequent use
+    - Less likely to conflict with other tools
+  </Tab>
+  <Tab title="Usage">
+    All tmux commands now use `Ctrl+Space` as prefix:
+    - `Ctrl+Space` then `c` → New window
+    - `Ctrl+Space` then `"` → Split horizontal
+    - `Ctrl+Space` then `%` → Split vertical
+    - `Ctrl+Space` then `[` → Copy mode
+  </Tab>
+</Tabs>
+
+## Window Management
+
+### Window Numbering
+
+```bash
+set -g renumber-windows on
+set -g base-index 1
+```
+
+- **renumber-windows**: Automatically renumber windows when one is closed (no gaps)
+- **base-index 1**: Start window numbering at 1 instead of 0 (easier to reach on keyboard)
+
+<Note>
+  With base-index 1, your first window is `Ctrl+Space` + `1` instead of `Ctrl+Space` + `0`.
+</Note>
+
+## Vim Integration
+
+### Vim Keybindings in Copy Mode
+
+```bash
+setw -g mode-keys vi
+```
+
+Enables Vim-style navigation in copy mode:
+- `h`, `j`, `k`, `l` - Move cursor
+- `w`, `b` - Word navigation
+- `/` - Search forward
+- `?` - Search backward
+
+### Copy Mode Bindings
+
+```bash
+bind-key [ copy-mode
+bind-key -T copy-mode-vi 'v' send -X begin-selection
+bind-key -T copy-mode-vi 'y' send -X copy-selection
+bind-key -T copy-mode-vi 'V' send -X rectangle-toggle
+```
+
+<Tabs>
+  <Tab title="Copy Workflow">
+    1. Enter copy mode: `Ctrl+Space` + `[`
+    2. Navigate with Vim keys: `h`, `j`, `k`, `l`
+    3. Start selection: `v`
+    4. Expand selection with movement keys
+    5. Copy selection: `y`
+    6. Exit copy mode automatically
+  </Tab>
+  <Tab title="Rectangle Selection">
+    - Press `V` in copy mode for rectangular (block) selection
+    - Useful for selecting columns of text
+    - Works like Vim's visual block mode (`Ctrl+v`)
+  </Tab>
+</Tabs>
+
+<Warning>
+  To paste, use `Ctrl+Space` + `]`. The copied text is stored in tmux's paste buffer, not the system clipboard.
+</Warning>
+
+## Performance Optimizations
+
+### Escape Time
+
+```bash
+set-option -sg escape-time 10
+```
+
+Reduces the delay after pressing Escape to 10ms (default is 500ms). Essential for Vim/Neovim users to avoid lag when switching modes.
+
+### Focus Events
+
+```bash
+set-option -g focus-events on
+```
+
+Enables focus events, allowing applications like Neovim to respond when switching between tmux panes.
+
+### Mouse Support
+
+```bash
+set -g mouse on
+```
+
+Enables mouse support for:
+- Selecting panes
+- Resizing panes
+- Scrolling through output
+- Selecting text in copy mode
+
+<Accordion title="Mouse Actions">
+  - **Click pane**: Switch focus
+  - **Click window**: Switch to window
+  - **Drag pane border**: Resize pane
+  - **Scroll wheel**: Scroll history (enters copy mode automatically)
+  - **Double-click**: Select word
+  - **Triple-click**: Select line
+</Accordion>
+
+## Theme and Plugins
+
+### Plugin Manager
+
+```bash
+set -g @plugin 'tmux-plugins/tpm'
+run '~/.tmux/plugins/tpm/tpm'
+```
+
+Uses TPM (Tmux Plugin Manager) to manage plugins.
+
+### Catppuccin Theme
+
+```bash
+set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
+```
+
+Installs the Catppuccin theme, providing:
+- Modern, pastel color palette
+- Clean status bar design
+- Good contrast and readability
+- Matches popular editor themes
+
+<Note>
+  The configuration uses the Dreams of Code variant of Catppuccin, which includes additional customizations.
+</Note>
+
+## Installation and Setup
+
+### Install Tmux
+
+```bash
+# macOS
+brew install tmux
+
+# Ubuntu/Debian
+sudo apt install tmux
+
+# Arch Linux
+sudo pacman -S tmux
+
+# Fedora
+sudo dnf install tmux
+```
+
+### Install TPM (Plugin Manager)
+
+```bash
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
+### Setup Configuration
+
+1. Copy or symlink `tmux.conf` to `~/.tmux/conf` or `~/.config/tmux/tmux.conf`
+2. Start tmux: `tmux`
+3. Install plugins: `Ctrl+Space` + `I` (capital i)
+4. Reload config: `Ctrl+Space` + `r` (if you add this binding)
+
+<Warning>
+  After initial setup, restart tmux or source the config: `tmux source-file ~/.tmux.conf`
+</Warning>
+
+## Essential Keybindings
+
+### Session Management
+
+- `tmux new -s name` - Create new named session
+- `Ctrl+Space` + `d` - Detach from session
+- `tmux attach -t name` - Attach to session
+- `tmux ls` - List sessions
+
+### Window Management
+
+- `Ctrl+Space` + `c` - Create new window
+- `Ctrl+Space` + `n` - Next window
+- `Ctrl+Space` + `p` - Previous window
+- `Ctrl+Space` + `1-9` - Switch to window number
+- `Ctrl+Space` + `,` - Rename window
+- `Ctrl+Space` + `&` - Kill window
+
+### Pane Management
+
+- `Ctrl+Space` + `%` - Split vertical
+- `Ctrl+Space` + `"` - Split horizontal
+- `Ctrl+Space` + `arrow` - Navigate panes
+- `Ctrl+Space` + `o` - Cycle through panes
+- `Ctrl+Space` + `x` - Kill pane
+- `Ctrl+Space` + `z` - Toggle pane zoom
+
+### Copy Mode
+
+- `Ctrl+Space` + `[` - Enter copy mode
+- `v` - Start selection (in copy mode)
+- `y` - Copy selection (in copy mode)
+- `Ctrl+Space` + `]` - Paste
+
+## Customization Tips
+
+### Add Config Reload Binding
+
+Add to `tmux.conf`:
+
+```bash
+bind r source-file ~/.tmux.conf \; display "Config reloaded!"
+```
+
+Now `Ctrl+Space` + `r` reloads your configuration.
+
+### Custom Pane Navigation
+
+For Vim-like pane navigation without prefix:
+
+```bash
+bind -n M-h select-pane -L
+bind -n M-j select-pane -D
+bind -n M-k select-pane -U
+bind -n M-l select-pane -R
+```
+
+Use `Alt+h/j/k/l` to switch panes directly.
+
+### Status Bar Position
+
+```bash
+set -g status-position top  # Move status bar to top
+```
+
+### Copy to System Clipboard
+
+**macOS:**
+```bash
+bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel 'pbcopy'
+```
+
+**Linux (with xclip):**
+```bash
+bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
+```
+
+## Advanced Features
+
+<Accordion title="Nested Tmux Sessions">
+  When SSHing into a remote machine running tmux, use `Ctrl+Space` + `Ctrl+Space` to send the prefix to the inner session.
+</Accordion>
+
+<Accordion title="Session Persistence">
+  Consider adding tmux-resurrect plugin for session persistence:
+  ```bash
+  set -g @plugin 'tmux-plugins/tmux-resurrect'
+  ```
+  Save: `Ctrl+Space` + `Ctrl+s`
+  Restore: `Ctrl+Space` + `Ctrl+r`
+</Accordion>
+
+<Accordion title="Vim + Tmux Navigation">
+  For seamless navigation between Vim and tmux panes, install vim-tmux-navigator:
+  
+  **In tmux.conf:**
+  ```bash
+  set -g @plugin 'christoomey/vim-tmux-navigator'
+  ```
+  
+  **In Neovim:**
+  ```lua
+  { "christoomey/vim-tmux-navigator" }
+  ```
+</Accordion>
+
+## Troubleshooting
+
+<Accordion title="Colors look wrong">
+  Ensure your terminal (Alacritty) is set to `xterm-256color` and tmux config includes the terminal overrides shown above.
+</Accordion>
+
+<Accordion title="Plugins not loading">
+  1. Verify TPM is installed: `ls ~/.tmux/plugins/tpm`
+  2. Press `Ctrl+Space` + `I` to install plugins
+  3. Check for errors: `Ctrl+Space` + `:` then type `source-file ~/.tmux.conf`
+</Accordion>
+
+<Accordion title="Escape key lag in Neovim">
+  Ensure `escape-time` is set to a low value (10ms recommended):
+  ```bash
+  set-option -sg escape-time 10
+  ```
+</Accordion>
+
+## Related Configuration
+
+- [Alacritty](/config/alacritty) - Terminal emulator that works perfectly with tmux
+- [Neovim](/config/neovim) - Integrates seamlessly with tmux for development
+- [AeroSpace](/config/aerospace) - Window manager for organizing multiple terminal windows

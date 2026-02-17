@@ -1,0 +1,276 @@
+---
+title: Neovim Configuration
+description: LazyVim-based Neovim configuration with custom plugins and settings
+---
+
+## Overview
+
+This Neovim configuration is built on top of [LazyVim](https://www.lazyvim.org/), a Neovim setup powered by lazy.nvim. It provides a modern, feature-rich development environment with minimal configuration overhead.
+
+## Configuration Structure
+
+The configuration follows LazyVim's modular structure:
+
+```
+nvim/
+├── init.lua                 # Entry point
+└── lua/
+    ├── config/              # Core configuration
+    │   ├── lazy.lua        # Plugin manager setup
+    │   ├── options.lua     # Vim options
+    │   ├── keymaps.lua     # Key mappings
+    │   └── autocmds.lua    # Auto commands
+    └── plugins/             # Plugin configurations
+        ├── colorscheme.lua
+        ├── obsidian.lua
+        └── snacks-config.lua
+```
+
+## Plugin Manager Setup
+
+The configuration uses [lazy.nvim](https://github.com/folke/lazy.nvim) for plugin management with automatic installation:
+
+```lua
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+end
+vim.opt.rtp:prepend(lazypath)
+```
+
+### Plugin Configuration
+
+```lua
+require("lazy").setup({
+  spec = {
+    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    { import = "plugins" },
+  },
+  defaults = {
+    lazy = false,
+    version = false,  -- Use latest git commit
+  },
+  install = { colorscheme = { "tokyonight", "habamax" } },
+  checker = {
+    enabled = true,   -- Auto-check for updates
+    notify = false,   -- Silent updates
+  },
+})
+```
+
+<Note>
+  LazyVim automatically lazy-loads plugins for optimal startup performance.
+</Note>
+
+## Color Schemes
+
+Multiple color schemes are installed with OneDark as the default:
+
+```lua
+return {
+  { "rebelot/kanagawa.nvim" },
+  { "NLKNguyen/papercolor-theme" },
+  { "ellisonleao/gruvbox.nvim" },
+  { "rose-pine/neovim" },
+  { "tiagovla/tokyodark.nvim" },
+  { "sainnhe/everforest" },
+  {
+    "navarasu/onedark.nvim",
+    opts = {
+      highlights = {
+        Visual = { bg = "#ffff00" },  -- Yellow visual selection
+      },
+    },
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "onedark",
+    },
+  },
+}
+```
+
+<Accordion title="Available Color Schemes">
+  - **OneDark** (default) - Atom's iconic dark theme
+  - **Kanagawa** - Dark color scheme inspired by Japanese paintings
+  - **PaperColor** - Light and dark themes inspired by Google's Material Design
+  - **Gruvbox** - Retro groove color scheme
+  - **Rose Pine** - All natural pine, faux fur and a bit of soho vibes
+  - **TokyoDark** - Clean dark theme inspired by Tokyo's cityscape
+  - **Everforest** - Comfortable and pleasant green forest theme
+</Accordion>
+
+## Custom Plugins
+
+### Obsidian Integration
+
+Seamless integration with Obsidian for note-taking:
+
+```lua
+return {
+  "epwalsh/obsidian.nvim",
+  version = "*",
+  lazy = true,
+  ft = "markdown",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "hrsh7th/nvim-cmp",
+  },
+  opts = {
+    workspaces = {
+      {
+        name = "personal",
+        path = "/Users/leylandyang/Library/Mobile Documents/iCloud~md~obsidian/Documents/Sharedvault",
+      },
+    },
+    completion = {
+      nvim_cmp = true,
+      min_chars = 2,
+    },
+    new_notes_location = "notes_subdir",
+    daily_notes = {
+      folder = "/daily notes",
+      date_format = "%m-%d-%Y",
+      alias_format = "%B %-d, %Y",
+      default_tags = { "daily-notes" },
+    },
+  },
+}
+```
+
+<Warning>
+  Update the workspace path to match your Obsidian vault location.
+</Warning>
+
+### Snacks Picker Configuration
+
+Enhanced file picker with hidden and ignored files:
+
+```lua
+return {
+  {
+    "folke/snacks.nvim",
+    opts = {
+      picker = {
+        hidden = true,   -- Show hidden files
+        ignored = true,  -- Show .gitignore files
+      },
+    },
+  },
+}
+```
+
+## Core Options
+
+Minimal custom options, leveraging LazyVim defaults:
+
+```lua
+vim.g.root_spec = { "cwd" }  -- Use current working directory as root
+```
+
+## Visual Customization
+
+Custom visual selection highlight for better visibility:
+
+```lua
+vim.api.nvim_set_hl(0, "Visual", { bg = "#ffff00", fg = "#000000" })
+```
+
+This creates a bright yellow background with black foreground for selected text.
+
+## Performance Optimizations
+
+Disabled runtime plugins for faster startup:
+
+```lua
+performance = {
+  rtp = {
+    disabled_plugins = {
+      "gzip",
+      "tarPlugin",
+      "tohtml",
+      "tutor",
+      "zipPlugin",
+    },
+  },
+}
+```
+
+## Key Features
+
+<Tabs>
+  <Tab title="Plugin Management">
+    - Automatic lazy.nvim installation
+    - Auto-check for plugin updates
+    - Lazy loading for optimal performance
+    - Version pinning support
+  </Tab>
+  <Tab title="Development">
+    - LSP support via LazyVim
+    - Code completion with nvim-cmp
+    - Syntax highlighting with Treesitter
+    - Git integration
+    - Fuzzy finding with telescope/snacks
+  </Tab>
+  <Tab title="Customization">
+    - Multiple color scheme options
+    - Custom visual selection colors
+    - Obsidian integration for markdown
+    - Enhanced file picker
+  </Tab>
+</Tabs>
+
+## Getting Started
+
+1. Install Neovim 0.9.0 or later
+2. Backup existing configuration
+3. Clone or symlink this configuration to `~/.config/nvim`
+4. Launch Neovim - plugins will install automatically
+5. Restart Neovim after initial installation
+
+<Note>
+  LazyVim provides extensive [documentation](https://www.lazyvim.org/) and keybindings. Press `<space>` to see available commands.
+</Note>
+
+## Customization Tips
+
+### Adding New Plugins
+
+Create a new file in `lua/plugins/` directory:
+
+```lua
+return {
+  "username/plugin-name",
+  opts = {
+    -- plugin options
+  },
+}
+```
+
+### Changing Color Scheme
+
+Edit `lua/plugins/colorscheme.lua` and update the default:
+
+```lua
+{
+  "LazyVim/LazyVim",
+  opts = {
+    colorscheme = "gruvbox",  -- Change to your preferred scheme
+  },
+}
+```
+
+### Custom Keymaps
+
+Add mappings in `lua/config/keymaps.lua`:
+
+```lua
+vim.keymap.set("n", "<leader>xx", "<cmd>YourCommand<cr>", { desc = "Description" })
+```
+
+## Related Configuration
+
+- [Alacritty Terminal](/config/alacritty) - Terminal emulator configuration
+- [Tmux](/config/tmux) - Terminal multiplexer setup

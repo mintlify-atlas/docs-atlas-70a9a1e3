@@ -1,0 +1,489 @@
+---
+title: AeroSpace Configuration
+description: Tiling window manager for macOS with i3-like keybindings and workspace management
+---
+
+## Overview
+
+AeroSpace is a tiling window manager for macOS that brings i3-like window management to macOS. This configuration provides Vim-style navigation, multiple workspaces, and seamless window organization without gaps or padding for maximum screen real estate.
+
+## Core Configuration
+
+### Startup Behavior
+
+```toml
+start-at-login = true
+after-login-command = []
+after-startup-command = []
+```
+
+- **start-at-login**: Automatically starts AeroSpace when you log in
+- **after-login-command**: Commands to run after login (empty by default)
+- **after-startup-command**: Commands to run after AeroSpace starts (empty by default)
+
+<Note>
+  You can add commands like `['exec-and-forget open -a "Alacritty"']` to auto-launch applications on startup.
+</Note>
+
+### Normalization
+
+```toml
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+```
+
+<Tabs>
+  <Tab title="Flatten Containers">
+    Automatically flattens unnecessary container nesting, simplifying the window tree structure for cleaner layouts.
+  </Tab>
+  <Tab title="Opposite Orientation">
+    Automatically switches orientation for nested containers, ensuring optimal space usage without manual intervention.
+  </Tab>
+</Tabs>
+
+## Layout Configuration
+
+### Default Layout
+
+```toml
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+accordion-padding = 30
+```
+
+<Tabs>
+  <Tab title="Tiles Layout">
+    - Default tiling mode
+    - Windows split screen space evenly
+    - Similar to i3's default behavior
+    - Best for most workflows
+  </Tab>
+  <Tab title="Accordion Layout">
+    - Stack windows with padding
+    - 30px padding between accordion items
+    - Toggle with `Alt+,`
+    - Useful for focused work on one window
+  </Tab>
+</Tabs>
+
+**Orientation Options:**
+- `auto` - Wide monitors get horizontal, tall monitors get vertical
+- `horizontal` - Always split left/right
+- `vertical` - Always split top/bottom
+
+### Gaps Configuration
+
+```toml
+[gaps]
+inner.horizontal = 0
+inner.vertical = 0
+outer.left = 0
+outer.bottom = 0
+outer.top = 0
+outer.right = 0
+```
+
+<Warning>
+  This configuration has **zero gaps** between windows and screen edges for maximum screen real estate. If you prefer spacing, increase these values (e.g., `inner.horizontal = 10`).
+</Warning>
+
+## Mouse Behavior
+
+```toml
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focus-changed = "move-mouse window-lazy-center"
+```
+
+- **on-focused-monitor-changed**: Moves mouse to center of the newly focused monitor
+- **on-focus-changed**: Moves mouse to center of the newly focused window
+
+<Note>
+  "Lazy" means the mouse only moves if it's not already in the target window/monitor, preventing unnecessary movement.
+</Note>
+
+## Keybindings
+
+### Layout Switching
+
+```toml
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+```
+
+- `Alt+/` - Cycle through tiles layouts (horizontal → vertical)
+- `Alt+,` - Cycle through accordion layouts
+
+### Window Navigation (Vim-style)
+
+```toml
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+```
+
+<Tabs>
+  <Tab title="Basic Navigation">
+    | Key | Action |
+    |-----|--------|
+    | `Alt+h` | Focus left window |
+    | `Alt+j` | Focus down window |
+    | `Alt+k` | Focus up window |
+    | `Alt+l` | Focus right window |
+  </Tab>
+  <Tab title="Why Vim Keys?">
+    - Home row positioning (no reaching for arrows)
+    - Matches Vim, Neovim, tmux navigation
+    - Faster and more ergonomic
+    - Industry standard for terminal users
+  </Tab>
+</Tabs>
+
+### Window Movement
+
+```toml
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+```
+
+Move windows in their current workspace:
+- `Alt+Shift+h` - Move window left
+- `Alt+Shift+j` - Move window down
+- `Alt+Shift+k` - Move window up
+- `Alt+Shift+l` - Move window right
+
+### Window Resizing
+
+```toml
+alt-shift-minus = 'resize smart -50'
+alt-shift-equal = 'resize smart +50'
+```
+
+- `Alt+Shift+-` - Shrink window by 50px
+- `Alt+Shift+=` - Grow window by 50px
+
+<Note>
+  "Smart" resizing automatically determines which dimension (width/height) to adjust based on the window's position in the layout.
+</Note>
+
+## Workspace Management
+
+### Numeric Workspaces
+
+```toml
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+# ... through alt-9
+```
+
+Quick access to workspaces 1-9 with `Alt+Number`.
+
+### Letter Workspaces
+
+```toml
+alt-a = 'workspace A'
+alt-b = 'workspace B'
+alt-c = 'workspace C'
+# ... through alt-z (excluding h,j,k,l)
+```
+
+<Accordion title="Available Letter Workspaces">
+  A, B, C, D, E, F, G, I, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+  
+  (H, J, K, L are used for window navigation)
+</Accordion>
+
+<Tabs>
+  <Tab title="Organization Ideas">
+    - **1-9**: Main development workspaces
+    - **C**: Communication (Slack, email)
+    - **B**: Browser
+    - **M**: Music/Media
+    - **D**: Design tools
+    - **T**: Testing/Terminal
+  </Tab>
+  <Tab title="Benefits">
+    - 35 total workspaces available
+    - No need to cycle through unused workspaces
+    - Jump directly to any workspace
+    - Organize by project or application type
+  </Tab>
+</Tabs>
+
+### Moving Windows to Workspaces
+
+```toml
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+# ... continues for all workspaces
+```
+
+Move the focused window to a specific workspace with `Alt+Shift+[key]`.
+
+### Workspace Navigation
+
+```toml
+alt-tab = 'workspace-back-and-forth'
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+```
+
+- `Alt+Tab` - Toggle between current and previous workspace
+- `Alt+Shift+Tab` - Move entire workspace to next monitor
+
+<Note>
+  `--wrap-around` means if you're on the last monitor, it cycles back to the first.
+</Note>
+
+## Service Mode
+
+### Entering Service Mode
+
+```toml
+alt-shift-semicolon = 'mode service'
+```
+
+Press `Alt+Shift+;` to enter service mode for advanced operations.
+
+### Service Mode Commands
+
+```toml
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+f = ['layout floating tiling', 'mode main']
+backspace = ['close-all-windows-but-current', 'mode main']
+
+alt-shift-h = ['join-with left', 'mode main']
+alt-shift-j = ['join-with down', 'mode main']
+alt-shift-k = ['join-with up', 'mode main']
+alt-shift-l = ['join-with right', 'mode main']
+```
+
+<Tabs>
+  <Tab title="Configuration">
+    - `Esc` - Reload AeroSpace configuration
+  </Tab>
+  <Tab title="Layout">
+    - `r` - Reset layout (flatten workspace tree)
+    - `f` - Toggle floating/tiling layout for current window
+  </Tab>
+  <Tab title="Window Management">
+    - `Backspace` - Close all windows except current
+    - `Alt+Shift+h/j/k/l` - Join window with adjacent window
+  </Tab>
+</Tabs>
+
+<Warning>
+  After each service mode command, AeroSpace automatically returns to main mode.
+</Warning>
+
+## Key Features
+
+<Tabs>
+  <Tab title="Window Management">
+    - Automatic tiling (no manual positioning)
+    - Vim-style navigation (h/j/k/l)
+    - Smart window resizing
+    - Floating window support
+    - Multiple layout modes
+  </Tab>
+  <Tab title="Workspace Features">
+    - 35 workspaces (1-9 + A-Z)
+    - Quick workspace switching
+    - Workspace-to-monitor movement
+    - Back-and-forth navigation
+    - Per-monitor workspace assignment
+  </Tab>
+  <Tab title="Integration">
+    - Mouse follows focus
+    - Auto-start at login
+    - Service mode for advanced operations
+    - Zero gaps for maximum space
+    - True color terminal support
+  </Tab>
+</Tabs>
+
+## Installation
+
+### Install AeroSpace
+
+```bash
+brew install --cask nikitabobko/tap/aerospace
+```
+
+### Setup Configuration
+
+1. Copy configuration to `~/.aerospace.toml`
+2. Grant Accessibility permissions:
+   - System Preferences → Security & Privacy → Accessibility
+   - Add AeroSpace to the list
+3. Start AeroSpace or log out and back in
+
+<Note>
+  AeroSpace requires Accessibility permissions to control window positions and read window information.
+</Note>
+
+## Common Workflows
+
+### Setting Up a Development Environment
+
+1. `Alt+1` - Switch to workspace 1
+2. Open terminal (Alacritty)
+3. `Alt+2` - Switch to workspace 2
+4. Open browser
+5. `Alt+1` - Back to workspace 1
+6. Open editor
+7. `Alt+/` - Toggle layout if needed
+
+### Moving Applications Between Monitors
+
+1. Focus the window you want to move
+2. `Alt+Shift+[workspace]` - Move to target workspace
+3. `Alt+Shift+Tab` - Move entire workspace to next monitor
+
+### Focusing on a Single Window
+
+1. `Alt+Shift+;` - Enter service mode
+2. `Backspace` - Close all other windows
+
+Or:
+
+1. `Alt+Shift+;` - Enter service mode
+2. `f` - Toggle floating mode
+3. `Alt+z` - Maximize (zoom)
+
+## Customization Tips
+
+### Add Gaps for Aesthetics
+
+```toml
+[gaps]
+inner.horizontal = 10
+inner.vertical = 10
+outer.left = 10
+outer.bottom = 10
+outer.top = 10
+outer.right = 10
+```
+
+### Launch Application on Startup
+
+```toml
+after-startup-command = [
+    'exec-and-forget open -a "Alacritty"',
+    'exec-and-forget open -a "Firefox"'
+]
+```
+
+### Assign Workspaces to Monitors
+
+```toml
+[workspace-to-monitor-force-assignment]
+1 = 'main'
+2 = 'main'
+C = 'secondary'
+```
+
+### Custom Application Bindings
+
+```toml
+[mode.main.binding]
+alt-return = 'exec-and-forget open -a "Alacritty"'
+alt-b = 'exec-and-forget open -a "Firefox"'
+```
+
+## Troubleshooting
+
+<Accordion title="AeroSpace not starting">
+  1. Check Accessibility permissions in System Preferences
+  2. Look for config errors: `aerospace --check-config`
+  3. View logs: `~/Library/Logs/AeroSpace/`
+</Accordion>
+
+<Accordion title="Keybindings not working">
+  - Ensure no other apps are capturing the same shortcuts
+  - Check System Preferences → Keyboard → Shortcuts for conflicts
+  - Restart AeroSpace after config changes
+</Accordion>
+
+<Accordion title="Windows not tiling">
+  - Some apps don't support tiling (System Preferences, some utilities)
+  - Use `Alt+Shift+;` then `f` to toggle floating/tiling mode
+  - Check if the app is in fullscreen mode (exit fullscreen first)
+</Accordion>
+
+<Accordion title="Mouse not following focus">
+  This is expected behavior with "lazy" mouse movement. Disable if unwanted:
+  ```toml
+  # Remove or comment out:
+  # on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+  # on-focus-changed = "move-mouse window-lazy-center"
+  ```
+</Accordion>
+
+## Advanced Tips
+
+### Keyboard Layout
+
+```toml
+key-mapping.preset = 'qwerty'
+```
+
+Change to `'dvorak'` if using Dvorak keyboard layout.
+
+### Service Mode Workflow
+
+Create custom service modes for specific workflows:
+
+```toml
+[mode.resize.binding]
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+esc = 'mode main'
+```
+
+Bind it in main mode:
+```toml
+alt-r = 'mode resize'
+```
+
+### Workspace Naming
+
+While not shown in status bar by default, document your workspace assignments:
+
+```toml
+# Workspace organization:
+# 1: Primary development
+# 2: Secondary development
+# 3: Testing
+# B: Browser
+# C: Communication
+# M: Music/Media
+```
+
+## Integration with Other Tools
+
+<Note>
+  AeroSpace works seamlessly with:
+  - [Alacritty](/config/alacritty) - Terminal emulator
+  - [Tmux](/config/tmux) - Terminal multiplexer for managing panes within terminal windows
+  - [Neovim](/config/neovim) - Editor that respects tiling layout
+</Note>
+
+**Recommended Setup:**
+- Use AeroSpace for window management (between applications)
+- Use tmux for terminal pane management (within terminal)
+- Use Neovim splits for editor layout (within Neovim)
+
+This three-layer approach provides maximum flexibility and organization.
+
+## Related Configuration
+
+- [Alacritty](/config/alacritty) - Terminal emulator configuration
+- [Tmux](/config/tmux) - Terminal multiplexer setup
+- [Neovim](/config/neovim) - Editor configuration

@@ -1,0 +1,335 @@
+---
+title: Alacritty Configuration
+description: Modern terminal emulator with GPU acceleration and custom theming
+---
+
+## Overview
+
+Alacritty is a cross-platform, GPU-accelerated terminal emulator written in Rust. This configuration focuses on aesthetics and performance with custom theming, transparency, and optimal font rendering.
+
+## Configuration File
+
+Configuration is stored in `alacritty/alacritty.toml` using TOML format:
+
+```toml
+general.import = [
+    "~/.config/alacritty/themes/themes/coolnight.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding.x = 10
+padding.y = 10
+decorations = "Buttonless"
+opacity = 0.8
+blur = true
+startup_mode = "Maximized"
+
+[font]
+normal.family = "0xProto Nerd Font Mono"
+size = 16
+```
+
+## Theme Configuration
+
+### Color Scheme
+
+The configuration imports the **CoolNight** theme:
+
+```toml
+general.import = [
+    "~/.config/alacritty/themes/themes/coolnight.toml"
+]
+```
+
+<Note>
+  The CoolNight theme provides a cool-toned dark color palette optimized for extended coding sessions.
+</Note>
+
+<Accordion title="Changing Themes">
+  To use a different theme:
+  
+  1. Browse available themes in the [Alacritty themes repository](https://github.com/alacritty/alacritty-theme)
+  2. Update the import path in your configuration
+  3. Save and relaunch Alacritty
+  
+  Example:
+  ```toml
+  general.import = [
+      "~/.config/alacritty/themes/themes/dracula.toml"
+  ]
+  ```
+</Accordion>
+
+## Environment Variables
+
+### Terminal Type
+
+```toml
+[env]
+TERM = "xterm-256color"
+```
+
+Sets the terminal type to support 256 colors, ensuring proper color rendering in terminal applications like tmux, vim, and shell prompts.
+
+<Warning>
+  Some applications may require `TERM="alacritty"` for optimal compatibility. Adjust if you experience rendering issues.
+</Warning>
+
+## Window Configuration
+
+### Padding
+
+```toml
+[window]
+padding.x = 10
+padding.y = 10
+```
+
+Adds 10 pixels of padding on all sides, creating breathing room between terminal content and window edges.
+
+### Window Decorations
+
+```toml
+decorations = "Buttonless"
+```
+
+<Tabs>
+  <Tab title="Buttonless">
+    Removes window control buttons (minimize, maximize, close) for a cleaner appearance while keeping the title bar.
+  </Tab>
+  <Tab title="Other Options">
+    - `"Full"` - Standard window with all decorations
+    - `"None"` - No decorations at all (borderless)
+    - `"Transparent"` - Transparent title bar (macOS only)
+  </Tab>
+</Tabs>
+
+### Transparency and Blur
+
+```toml
+opacity = 0.8
+blur = true
+```
+
+- **Opacity**: Set to 0.8 (80%) for subtle transparency
+- **Blur**: Enables background blur for desktop content behind the terminal
+
+<Note>
+  Blur support depends on your window manager/compositor. On macOS, this works natively. On Linux, ensure your compositor supports blur effects.
+</Note>
+
+### Startup Mode
+
+```toml
+startup_mode = "Maximized"
+```
+
+Launches Alacritty in maximized mode by default.
+
+Options:
+- `"Windowed"` - Normal window size
+- `"Maximized"` - Fill screen but keep window decorations
+- `"Fullscreen"` - True fullscreen mode
+
+## Font Configuration
+
+### Font Family
+
+```toml
+[font]
+normal.family = "0xProto Nerd Font Mono"
+```
+
+Uses **0xProto Nerd Font Mono**, a programming-focused monospace font with:
+- Clear distinction between similar characters (0/O, 1/l/I)
+- Extensive glyph coverage via Nerd Fonts
+- Ligature support for programming
+- Optimized for code readability
+
+<Warning>
+  Ensure 0xProto Nerd Font is installed on your system. Download from [Nerd Fonts](https://www.nerdfonts.com/).
+</Warning>
+
+### Font Size
+
+```toml
+size = 16
+```
+
+Sets the base font size to 16 points. Adjust based on your display resolution and preferences:
+
+- **Small displays (1080p)**: 12-14
+- **Standard displays**: 14-16
+- **High DPI/Retina**: 16-20
+
+## Key Features
+
+<Tabs>
+  <Tab title="Performance">
+    - GPU-accelerated rendering
+    - Sub-millisecond latency
+    - Efficient memory usage
+    - Smooth scrolling
+  </Tab>
+  <Tab title="Appearance">
+    - Custom color themes
+    - Background transparency and blur
+    - Nerd Font icon support
+    - Minimal window decorations
+  </Tab>
+  <Tab title="Compatibility">
+    - 256-color terminal support
+    - True color (24-bit) support
+    - Cross-platform (macOS, Linux, Windows)
+    - Works seamlessly with tmux
+  </Tab>
+</Tabs>
+
+## Installation
+
+### macOS
+
+```bash
+brew install alacritty
+```
+
+### Linux
+
+```bash
+# Arch Linux
+sudo pacman -S alacritty
+
+# Ubuntu/Debian
+sudo apt install alacritty
+
+# Fedora
+sudo dnf install alacritty
+```
+
+### Install Nerd Font
+
+```bash
+brew tap homebrew/cask-fonts
+brew install --cask font-0xproto-nerd-font
+```
+
+## Setup Instructions
+
+1. Install Alacritty and 0xProto Nerd Font
+2. Create config directory:
+   ```bash
+   mkdir -p ~/.config/alacritty
+   ```
+3. Copy or symlink `alacritty.toml` to `~/.config/alacritty/`
+4. Install Alacritty themes:
+   ```bash
+   git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+   ```
+5. Launch Alacritty
+
+## Customization Tips
+
+### Adjust Transparency
+
+For better readability, increase opacity:
+
+```toml
+opacity = 0.95  # Less transparent
+```
+
+For more dramatic effect:
+
+```toml
+opacity = 0.6   # More transparent
+```
+
+### Change Font Size Dynamically
+
+While Alacritty is running:
+- **Increase**: `Cmd/Ctrl` + `+`
+- **Decrease**: `Cmd/Ctrl` + `-`
+- **Reset**: `Cmd/Ctrl` + `0`
+
+### Disable Blur
+
+If blur causes performance issues:
+
+```toml
+blur = false
+```
+
+### Custom Padding
+
+Adjust padding for different preferences:
+
+```toml
+# More padding
+padding.x = 20
+padding.y = 15
+
+# No padding
+padding.x = 0
+padding.y = 0
+```
+
+## Advanced Configuration
+
+### Font Variants
+
+Configure different font styles:
+
+```toml
+[font]
+normal.family = "0xProto Nerd Font Mono"
+bold.family = "0xProto Nerd Font Mono"
+italic.family = "0xProto Nerd Font Mono"
+bold_italic.family = "0xProto Nerd Font Mono"
+
+size = 16
+offset.x = 0
+offset.y = 0
+```
+
+### Window Position
+
+```toml
+[window]
+position.x = 100
+position.y = 100
+```
+
+### Cursor Style
+
+```toml
+[cursor]
+style.shape = "Block"  # Block, Underline, Beam
+style.blinking = "On"
+```
+
+## Troubleshooting
+
+<Accordion title="Colors look wrong">
+  Ensure `TERM="xterm-256color"` is set. Some applications may need `TERM="alacritty"`.
+</Accordion>
+
+<Accordion title="Font not rendering correctly">
+  Verify the Nerd Font is installed:
+  ```bash
+  fc-list | grep "0xProto"
+  ```
+  If not found, reinstall the font and restart Alacritty.
+</Accordion>
+
+<Accordion title="Transparency not working">
+  - **macOS**: Should work out of the box
+  - **Linux**: Requires a compositor (picom, compton, or built-in to your DE)
+  - Check if blur is supported by your window manager
+</Accordion>
+
+## Related Configuration
+
+- [Tmux](/config/tmux) - Terminal multiplexer for enhanced workflow
+- [Neovim](/config/neovim) - Text editor configuration

@@ -1,0 +1,314 @@
+---
+title: "Keymaps"
+description: "Custom keyboard shortcuts and key bindings for Neovim"
+---
+
+This configuration inherits all keymaps from [LazyVim](https://www.lazyvim.org/) and can be extended with custom mappings.
+
+## Configuration File
+
+Keymaps are defined in `lua/config/keymaps.lua`, which is automatically loaded on the `VeryLazy` event.
+
+```lua
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
+```
+
+Location: `lua/config/keymaps.lua:1-4`
+
+<Note>
+This configuration currently uses all default LazyVim keymaps without custom overrides.
+</Note>
+
+---
+
+## Default LazyVim Keymaps
+
+The configuration inherits comprehensive keymaps from LazyVim. Below are the most commonly used shortcuts:
+
+### General
+
+<Tabs>
+  <Tab title="Leader Key">
+    The leader key is set to **Space** by default.
+    
+    ```vim
+    vim.g.mapleader = " "
+    ```
+  </Tab>
+  
+  <Tab title="Essential Shortcuts">
+    | Key | Mode | Action |
+    |-----|------|--------|
+    | `<leader>qq` | n | Quit all |
+    | `<leader>l` | n | Lazy (plugin manager) |
+    | `<leader>K` | n | Keymap reference |
+    | `<C-s>` | n, i, x | Save file |
+    | `<leader>fn` | n | New file |
+  </Tab>
+</Tabs>
+
+---
+
+### File Navigation
+
+<Accordion title="File & Buffer Management">
+| Key | Action |
+|-----|--------|
+| `<leader><space>` | Find files (root dir) |
+| `<leader>ff` | Find files (root dir) |
+| `<leader>fF` | Find files (cwd) |
+| `<leader>fb` | Buffers |
+| `<leader>fr` | Recent files |
+| `<leader>,` | Switch buffer |
+| `<leader>\`` | Terminal (root dir) |
+| `<C-/>` | Terminal (root dir) |
+| `<leader>bd` | Delete buffer |
+| `<leader>bD` | Delete buffer and window |
+</Accordion>
+
+---
+
+### Search & Replace
+
+<Accordion title="Search Commands">
+| Key | Action |
+|-----|--------|
+| `<leader>sg` | Grep (root dir) |
+| `<leader>sG` | Grep (cwd) |
+| `<leader>sw` | Word (root dir) |
+| `<leader>sW` | Word (cwd) |
+| `<leader>ss` | Goto symbol |
+| `<leader>sS` | Goto symbol (workspace) |
+| `<leader>sr` | Replace in files |
+| `/` | Search forward |
+| `?` | Search backward |
+| `n` | Next search result |
+| `N` | Previous search result |
+</Accordion>
+
+---
+
+### LSP (Language Server Protocol)
+
+<Accordion title="LSP Keymaps">
+| Key | Action |
+|-----|--------|
+| `gd` | Goto definition |
+| `gr` | References |
+| `gD` | Goto declaration |
+| `gI` | Goto implementation |
+| `gy` | Goto type definition |
+| `K` | Hover documentation |
+| `gK` | Signature help |
+| `<leader>ca` | Code action |
+| `<leader>cr` | Rename |
+| `<leader>cf` | Format document |
+| `]d` | Next diagnostic |
+| `[d` | Previous diagnostic |
+| `<leader>cd` | Line diagnostics |
+| `<leader>cl` | LSP info |
+</Accordion>
+
+---
+
+### Code Editing
+
+<Accordion title="Editing Shortcuts">
+| Key | Mode | Action |
+|-----|------|--------|
+| `<leader>cc` | n | Run file |
+| `<leader>cR` | n | Rename file |
+| `<leader>ur` | n | Toggle relative line numbers |
+| `<leader>uf` | n | Toggle format on save |
+| `<leader>us` | n | Toggle spelling |
+| `<leader>uw` | n | Toggle word wrap |
+| `J` | v | Move lines down |
+| `K` | v | Move lines up |
+| `<` | v | Decrease indent |
+| `>` | v | Increase indent |
+| `gcc` | n | Toggle comment (line) |
+| `gc` | v | Toggle comment (selection) |
+</Accordion>
+
+---
+
+### Window Management
+
+<Accordion title="Window & Split Navigation">
+| Key | Action |
+|-----|--------|
+| `<C-h>` | Go to left window |
+| `<C-j>` | Go to lower window |
+| `<C-k>` | Go to upper window |
+| `<C-l>` | Go to right window |
+| `<C-Up>` | Increase window height |
+| `<C-Down>` | Decrease window height |
+| `<C-Left>` | Decrease window width |
+| `<C-Right>` | Increase window width |
+| `<leader>w-` | Split window below |
+| `<leader>w\|` | Split window right |
+| `<leader>wd` | Delete window |
+</Accordion>
+
+---
+
+### Git Integration
+
+<Accordion title="Git Commands">
+| Key | Action |
+|-----|--------|
+| `<leader>gg` | Lazygit (root dir) |
+| `<leader>gG` | Lazygit (cwd) |
+| `<leader>gb` | Git blame line |
+| `<leader>gB` | Git browse |
+| `<leader>gf` | Lazygit current file history |
+| `<leader>gl` | Lazygit log |
+| `<leader>gL` | Lazygit log (cwd) |
+| `]h` | Next hunk |
+| `[h` | Previous hunk |
+| `<leader>ghp` | Preview hunk |
+| `<leader>ghr` | Reset hunk |
+| `<leader>ghs` | Stage hunk |
+| `<leader>ghu` | Undo stage hunk |
+</Accordion>
+
+---
+
+### Plugin-Specific Keymaps
+
+<Tabs>
+  <Tab title="LeetCode">
+    LeetCode plugin uses the following commands (no default keymaps):
+    
+    ```vim
+    :Leet
+    :Leet list
+    :Leet desc
+    :Leet submit
+    :Leet run
+    ```
+    
+    You can add custom keymaps in `lua/config/keymaps.lua`:
+    
+    ```lua
+    vim.keymap.set("n", "<leader>ll", ":Leet list<CR>", { desc = "LeetCode list" })
+    vim.keymap.set("n", "<leader>ls", ":Leet submit<CR>", { desc = "LeetCode submit" })
+    vim.keymap.set("n", "<leader>lr", ":Leet run<CR>", { desc = "LeetCode run" })
+    ```
+  </Tab>
+  
+  <Tab title="Obsidian">
+    Obsidian plugin keymaps (when in markdown files):
+    
+    | Key | Action |
+    |-----|--------|
+    | `gf` | Follow link under cursor |
+    | `<leader>oo` | Open Obsidian app |
+    | `<leader>on` | New note |
+    | `<leader>os` | Search notes |
+    | `<leader>ot` | Today's daily note |
+    | `<leader>oy` | Yesterday's daily note |
+    | `<leader>od` | Open daily note picker |
+    
+    <Note>
+    These are typical Obsidian.nvim keymaps. Verify in `:checkhealth obsidian`
+    </Note>
+  </Tab>
+  
+  <Tab title="VimBeGood">
+    Launch the VimBeGood game:
+    
+    ```vim
+    :VimBeGood
+    ```
+    
+    No default keymaps. Add a custom one:
+    
+    ```lua
+    vim.keymap.set("n", "<leader>vg", ":VimBeGood<CR>", { desc = "VimBeGood" })
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Custom Tab Completion
+
+The configuration modifies nvim-cmp keymaps for a more intuitive completion experience:
+
+```lua
+["<Tab>"] = cmp.mapping(function(fallback)
+  if cmp.visible() then
+    local entry = cmp.get_selected_entry()
+    if not entry then
+      cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+    else
+      cmp.confirm()
+    end
+  else
+    fallback()
+  end
+end, { "i", "s" }),
+
+["<CR>"] = cmp.mapping(function(fallback)
+  cmp.abort()
+  fallback()
+end, { "i", "s", "c" }),
+```
+
+Location: `lua/plugins/tab-complete.lua:18-35`
+
+**Behavior:**
+- **Tab**: Selects first item if completion menu is open with no selection, otherwise confirms
+- **Enter**: Always inserts newline (doesn't confirm completion)
+- **Ctrl-y**: Explicitly confirm completion (LazyVim default)
+
+---
+
+## Adding Custom Keymaps
+
+To add your own keymaps, edit `lua/config/keymaps.lua`:
+
+```lua
+-- Example custom keymaps
+local keymap = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+-- Quick save with Ctrl-s
+keymap("n", "<C-s>", ":w<CR>", opts)
+
+-- Clear search highlighting
+keymap("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
+
+-- Better window navigation
+keymap("n", "<C-h>", "<C-w>h", opts)
+keymap("n", "<C-j>", "<C-w>j", opts)
+keymap("n", "<C-k>", "<C-w>k", opts)
+keymap("n", "<C-l>", "<C-w>l", opts)
+
+-- Center search results
+keymap("n", "n", "nzzzv", opts)
+keymap("n", "N", "Nzzzv", opts)
+```
+
+<Note type="tip">
+Use descriptive `desc` fields in your keymaps - they appear in Which-Key popup (`<leader>K`).
+</Note>
+
+---
+
+## Keymap Reference
+
+Press `<leader>K` in normal mode to open the interactive keymap reference powered by Which-Key.
+
+<Note>
+For the complete list of LazyVim keymaps, see: [LazyVim Keymaps Documentation](https://www.lazyvim.org/keymaps)
+</Note>
+
+## Related Pages
+
+- [Plugins](/neovim/plugins) - Plugin configurations
+- [Options](/neovim/options) - Editor settings
+- [Colorschemes](/neovim/colorschemes) - Theme settings

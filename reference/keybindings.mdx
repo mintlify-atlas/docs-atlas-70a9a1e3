@@ -1,0 +1,389 @@
+---
+title: 'Keybindings Reference'
+description: 'Complete keyboard shortcuts for tmux, AeroSpace, and Neovim'
+icon: 'keyboard'
+---
+
+## Overview
+
+This page provides a comprehensive reference of all keyboard shortcuts configured in this dotfiles setup. The keybindings are organized by application for easy lookup.
+
+<Note>
+All keybindings can be customized by editing their respective configuration files.
+</Note>
+
+## Tmux Keybindings
+
+Tmux is configured with Vim-style keybindings and uses `Ctrl-Space` as the prefix.
+
+### Prefix Key
+
+| Key | Action | Description |
+|-----|--------|-------------|
+| `Ctrl-Space` | Prefix | Main prefix key (replaces default `Ctrl-b`) |
+
+<Tip>
+The prefix key must be pressed before any tmux command. For example, to enter copy mode, press `Ctrl-Space` then `[`.
+</Tip>
+
+### Copy Mode
+
+| Key | Action | Description |
+|-----|--------|-------------|
+| `Prefix + [` | Enter copy mode | Start navigating and copying text |
+| `v` | Begin selection | Start visual selection (in copy mode) |
+| `y` | Copy selection | Copy selected text to clipboard (in copy mode) |
+| `V` | Rectangle toggle | Toggle rectangular selection (in copy mode) |
+
+### General Settings
+
+- **Mouse support**: Enabled
+- **Vi mode keys**: Enabled in copy mode
+- **Base index**: Windows start at 1 (instead of 0)
+- **Renumber windows**: Automatic when windows are closed
+
+---
+
+## AeroSpace Keybindings
+
+AeroSpace is a tiling window manager for macOS. All keybindings use `Alt` (Option) as the modifier.
+
+### Layout Management
+
+| Key | Action | Description |
+|-----|--------|-------------|
+| `Alt + /` | Toggle tiles layout | Switch between horizontal and vertical tiles |
+| `Alt + ,` | Toggle accordion layout | Switch between horizontal and vertical accordion |
+
+### Focus Navigation
+
+| Key | Action | Description |
+|-----|--------|-------------|
+| `Alt + h` | Focus left | Move focus to left window |
+| `Alt + j` | Focus down | Move focus to window below |
+| `Alt + k` | Focus up | Move focus to window above |
+| `Alt + l` | Focus right | Move focus to right window |
+
+<Tip>
+These Vim-style navigation keys (hjkl) make it easy to move between windows without using the mouse.
+</Tip>
+
+### Window Movement
+
+| Key | Action | Description |
+|-----|--------|-------------|
+| `Alt + Shift + h` | Move left | Move window to the left |
+| `Alt + Shift + j` | Move down | Move window down |
+| `Alt + Shift + k` | Move up | Move window up |
+| `Alt + Shift + l` | Move right | Move window to the right |
+
+### Window Resizing
+
+| Key | Action | Description |
+|-----|--------|-------------|
+| `Alt + Shift + -` | Decrease size | Shrink window by 50 pixels |
+| `Alt + Shift + =` | Increase size | Grow window by 50 pixels |
+
+### Workspace Navigation
+
+<AccordionGroup>
+  <Accordion title="Number Workspaces (1-9)" icon="hashtag">
+    | Key | Action |
+    |-----|--------|
+    | `Alt + 1` | Switch to workspace 1 |
+    | `Alt + 2` | Switch to workspace 2 |
+    | `Alt + 3` | Switch to workspace 3 |
+    | `Alt + 4` | Switch to workspace 4 |
+    | `Alt + 5` | Switch to workspace 5 |
+    | `Alt + 6` | Switch to workspace 6 |
+    | `Alt + 7` | Switch to workspace 7 |
+    | `Alt + 8` | Switch to workspace 8 |
+    | `Alt + 9` | Switch to workspace 9 |
+  </Accordion>
+
+  <Accordion title="Letter Workspaces (A-Z)" icon="font">
+    | Key | Action |
+    |-----|--------|
+    | `Alt + a` | Switch to workspace A |
+    | `Alt + b` | Switch to workspace B |
+    | `Alt + c` | Switch to workspace C |
+    | `Alt + d` | Switch to workspace D |
+    | `Alt + e` | Switch to workspace E |
+    | `Alt + f` | Switch to workspace F |
+    | `Alt + g` | Switch to workspace G |
+    | `Alt + i` | Switch to workspace I |
+    | `Alt + m` | Switch to workspace M |
+    | `Alt + n` | Switch to workspace N |
+    | `Alt + o` | Switch to workspace O |
+    | `Alt + p` | Switch to workspace P |
+    | `Alt + q` | Switch to workspace Q |
+    | `Alt + r` | Switch to workspace R |
+    | `Alt + s` | Switch to workspace S |
+    | `Alt + t` | Switch to workspace T |
+    | `Alt + u` | Switch to workspace U |
+    | `Alt + v` | Switch to workspace V |
+    | `Alt + w` | Switch to workspace W |
+    | `Alt + x` | Switch to workspace X |
+    | `Alt + y` | Switch to workspace Y |
+    | `Alt + z` | Switch to workspace Z |
+  </Accordion>
+</AccordionGroup>
+
+### Move Window to Workspace
+
+<AccordionGroup>
+  <Accordion title="Move to Number Workspaces (1-9)" icon="arrow-right">
+    | Key | Action |
+    |-----|--------|
+    | `Alt + Shift + 1` | Move window to workspace 1 |
+    | `Alt + Shift + 2` | Move window to workspace 2 |
+    | `Alt + Shift + 3` | Move window to workspace 3 |
+    | `Alt + Shift + 4` | Move window to workspace 4 |
+    | `Alt + Shift + 5` | Move window to workspace 5 |
+    | `Alt + Shift + 6` | Move window to workspace 6 |
+    | `Alt + Shift + 7` | Move window to workspace 7 |
+    | `Alt + Shift + 8` | Move window to workspace 8 |
+    | `Alt + Shift + 9` | Move window to workspace 9 |
+  </Accordion>
+
+  <Accordion title="Move to Letter Workspaces (A-Z)" icon="arrow-right">
+    | Key | Action |
+    |-----|--------|
+    | `Alt + Shift + a` | Move window to workspace A |
+    | `Alt + Shift + b` | Move window to workspace B |
+    | `Alt + Shift + c` | Move window to workspace C |
+    | `Alt + Shift + d` | Move window to workspace D |
+    | `Alt + Shift + e` | Move window to workspace E |
+    | `Alt + Shift + f` | Move window to workspace F |
+    | `Alt + Shift + g` | Move window to workspace G |
+    | `Alt + Shift + i` | Move window to workspace I |
+    | `Alt + Shift + m` | Move window to workspace M |
+    | `Alt + Shift + n` | Move window to workspace N |
+    | `Alt + Shift + o` | Move window to workspace O |
+    | `Alt + Shift + p` | Move window to workspace P |
+    | `Alt + Shift + q` | Move window to workspace Q |
+    | `Alt + Shift + r` | Move window to workspace R |
+    | `Alt + Shift + s` | Move window to workspace S |
+    | `Alt + Shift + t` | Move window to workspace T |
+    | `Alt + Shift + u` | Move window to workspace U |
+    | `Alt + Shift + v` | Move window to workspace V |
+    | `Alt + Shift + w` | Move window to workspace W |
+    | `Alt + Shift + x` | Move window to workspace X |
+    | `Alt + Shift + y` | Move window to workspace Y |
+    | `Alt + Shift + z` | Move window to workspace Z |
+  </Accordion>
+</AccordionGroup>
+
+### Workspace Utilities
+
+| Key | Action | Description |
+|-----|--------|-------------|
+| `Alt + Tab` | Back and forth | Toggle between current and previous workspace |
+| `Alt + Shift + Tab` | Move to next monitor | Move workspace to next monitor (wraps around) |
+
+### Service Mode
+
+Service mode provides advanced window management operations.
+
+| Key | Action | Description |
+|-----|--------|-------------|
+| `Alt + Shift + ;` | Enter service mode | Enter service mode for advanced commands |
+
+#### Service Mode Commands
+
+| Key | Action | Description |
+|-----|--------|-------------|
+| `Esc` | Reload config | Reload AeroSpace config and exit service mode |
+| `r` | Reset layout | Flatten workspace tree and exit service mode |
+| `f` | Toggle floating | Toggle between floating and tiling layout |
+| `Backspace` | Close other windows | Close all windows except current |
+| `Alt + Shift + h` | Join left | Join current window with left window |
+| `Alt + Shift + j` | Join down | Join current window with window below |
+| `Alt + Shift + k` | Join up | Join current window with window above |
+| `Alt + Shift + l` | Join right | Join current window with right window |
+
+<Note>
+All service mode commands automatically return you to main mode after execution.
+</Note>
+
+---
+
+## Neovim Keybindings
+
+This configuration uses LazyVim, which provides sensible defaults and additional keybindings.
+
+<Tip>
+The leader key is set to `Space` by default in LazyVim.
+</Tip>
+
+### Essential LazyVim Keybindings
+
+<AccordionGroup>
+  <Accordion title="General" icon="star">
+    | Key | Mode | Action | Description |
+    |-----|------|--------|-------------|
+    | `<leader>qq` | Normal | Quit all | Quit all windows |
+    | `<leader>l` | Normal | Lazy | Open Lazy plugin manager |
+    | `<Esc>` | Insert | Normal mode | Exit insert mode (also works with `jk`) |
+    | `<leader>ur` | Normal | Redraw | Redraw screen and clear highlights |
+    | `gco` | Normal/Visual | Add comment below | Add comment below current line |
+    | `gcO` | Normal/Visual | Add comment above | Add comment above current line |
+  </Accordion>
+
+  <Accordion title="File Navigation" icon="folder-open">
+    | Key | Mode | Action | Description |
+    |-----|------|--------|-------------|
+    | `<leader><space>` | Normal | Find files | Find files in project |
+    | `<leader>ff` | Normal | Find files (root) | Find files from root directory |
+    | `<leader>fg` | Normal | Find files (git) | Find files tracked by git |
+    | `<leader>fr` | Normal | Recent files | Find recent files |
+    | `<leader>fb` | Normal | Buffers | Find open buffers |
+    | `<leader>sg` | Normal | Grep | Search text in files |
+    | `<leader>sw` | Normal | Search word | Search word under cursor |
+    | `<leader>ss` | Normal | Goto symbol | Jump to symbol in file |
+    | `<leader>sS` | Normal | Goto symbol (workspace) | Jump to symbol in workspace |
+  </Accordion>
+
+  <Accordion title="Buffer Management" icon="file">
+    | Key | Mode | Action | Description |
+    |-----|------|--------|-------------|
+    | `<S-h>` | Normal | Previous buffer | Switch to previous buffer |
+    | `<S-l>` | Normal | Next buffer | Switch to next buffer |
+    | `<leader>bd` | Normal | Delete buffer | Delete current buffer |
+    | `<leader>bo` | Normal | Delete other buffers | Delete all buffers except current |
+    | `<leader>bp` | Normal | Pin buffer | Pin/unpin current buffer |
+  </Accordion>
+
+  <Accordion title="Window Management" icon="window-maximize">
+    | Key | Mode | Action | Description |
+    |-----|------|--------|-------------|
+    | `<C-h>` | Normal | Left window | Move to left window |
+    | `<C-j>` | Normal | Down window | Move to window below |
+    | `<C-k>` | Normal | Up window | Move to window above |
+    | `<C-l>` | Normal | Right window | Move to right window |
+    | `<leader>-` | Normal | Split below | Create horizontal split |
+    | `<leader>\|` | Normal | Split right | Create vertical split |
+    | `<leader>wd` | Normal | Delete window | Close current window |
+  </Accordion>
+
+  <Accordion title="Code Editing" icon="code">
+    | Key | Mode | Action | Description |
+    |-----|------|--------|-------------|
+    | `<leader>ca` | Normal/Visual | Code actions | Show available code actions |
+    | `<leader>cr` | Normal | Rename | Rename symbol under cursor |
+    | `gd` | Normal | Go to definition | Jump to definition |
+    | `gr` | Normal | Go to references | Show references |
+    | `gI` | Normal | Go to implementation | Jump to implementation |
+    | `gy` | Normal | Go to type definition | Jump to type definition |
+    | `K` | Normal | Hover | Show hover documentation |
+    | `gD` | Normal | Go to declaration | Jump to declaration |
+    | `]d` | Normal | Next diagnostic | Go to next diagnostic |
+    | `[d` | Normal | Previous diagnostic | Go to previous diagnostic |
+    | `<leader>cd` | Normal | Line diagnostics | Show diagnostics for current line |
+  </Accordion>
+
+  <Accordion title="LSP & Formatting" icon="wand-magic-sparkles">
+    | Key | Mode | Action | Description |
+    |-----|------|--------|-------------|
+    | `<leader>cf` | Normal/Visual | Format | Format code |
+    | `<leader>cl` | Normal | LSP info | Show LSP information |
+    | `<leader>cR` | Normal | Restart LSP | Restart LSP servers |
+  </Accordion>
+
+  <Accordion title="Git Integration" icon="git-alt">
+    | Key | Mode | Action | Description |
+    |-----|------|--------|-------------|
+    | `<leader>gg` | Normal | Lazygit | Open Lazygit |
+    | `<leader>gb` | Normal | Git blame | Show git blame |
+    | `<leader>gB` | Normal | Git browse | Open in browser |
+    | `]h` | Normal | Next hunk | Go to next git hunk |
+    | `[h` | Normal | Previous hunk | Go to previous git hunk |
+    | `<leader>ghs` | Normal/Visual | Stage hunk | Stage git hunk |
+    | `<leader>ghr` | Normal/Visual | Reset hunk | Reset git hunk |
+    | `<leader>ghS` | Normal | Stage buffer | Stage entire buffer |
+    | `<leader>ghu` | Normal | Undo stage hunk | Undo last staged hunk |
+    | `<leader>ghR` | Normal | Reset buffer | Reset entire buffer |
+    | `<leader>ghp` | Normal | Preview hunk | Preview git hunk |
+    | `<leader>ghd` | Normal | Diff this | Show diff |
+  </Accordion>
+
+  <Accordion title="Terminal" icon="terminal">
+    | Key | Mode | Action | Description |
+    |-----|------|--------|-------------|
+    | `<C-/>` | Normal | Terminal | Toggle terminal |
+    | `<C-_>` | Normal | Terminal (alt) | Toggle terminal (alternative) |
+    | `<Esc><Esc>` | Terminal | Normal mode | Exit terminal mode |
+  </Accordion>
+
+  <Accordion title="UI Toggles" icon="toggle-on">
+    | Key | Mode | Action | Description |
+    |-----|------|--------|-------------|
+    | `<leader>uf` | Normal | Toggle format on save | Enable/disable auto-formatting |
+    | `<leader>us` | Normal | Toggle spelling | Enable/disable spell check |
+    | `<leader>uw` | Normal | Toggle word wrap | Enable/disable line wrapping |
+    | `<leader>ul` | Normal | Toggle line numbers | Show/hide line numbers |
+    | `<leader>ud` | Normal | Toggle diagnostics | Show/hide diagnostics |
+    | `<leader>uc` | Normal | Toggle conceal | Toggle conceallevel |
+    | `<leader>uT` | Normal | Toggle treesitter | Enable/disable treesitter |
+    | `<leader>ub` | Normal | Toggle background | Toggle light/dark background |
+  </Accordion>
+
+  <Accordion title="Search & Replace" icon="magnifying-glass">
+    | Key | Mode | Action | Description |
+    |-----|------|--------|-------------|
+    | `<leader>sr` | Normal | Replace in files | Search and replace in files |
+    | `<leader>sR` | Normal | Replace word | Replace word under cursor |
+    | `n` | Normal/Visual | Next search | Next search result (centered) |
+    | `N` | Normal/Visual | Previous search | Previous search result (centered) |
+    | `<Esc>` | Normal | Clear search | Clear search highlight |
+  </Accordion>
+
+  <Accordion title="Movement & Editing" icon="arrows-alt">
+    | Key | Mode | Action | Description |
+    |-----|------|--------|-------------|
+    | `j` | Normal | Down | Move down (handles word wrap) |
+    | `k` | Normal | Up | Move up (handles word wrap) |
+    | `<A-j>` | Normal/Insert/Visual | Move down | Move line/selection down |
+    | `<A-k>` | Normal/Insert/Visual | Move up | Move line/selection up |
+    | `<C-d>` | Normal | Half page down | Scroll half page down (centered) |
+    | `<C-u>` | Normal | Half page up | Scroll half page up (centered) |
+    | `>` | Visual | Indent | Indent and reselect |
+    | `<` | Visual | Outdent | Outdent and reselect |
+    | `p` | Visual | Paste | Paste without yanking replaced text |
+  </Accordion>
+</AccordionGroup>
+
+### Additional Notes
+
+<Note>
+**Leader Key**: In LazyVim, the leader key is `Space` by default.
+
+For example:
+- `<leader>ff` means press `Space` then `f` twice
+- `<leader>ca` means press `Space`, then `c`, then `a`
+</Note>
+
+<Tip>
+Many keybindings in LazyVim use the **which-key** plugin, which shows available commands when you pause after pressing the leader key or another prefix.
+</Tip>
+
+## Customization
+
+To customize keybindings, edit the respective configuration files:
+
+- **Tmux**: `~/.config/tmux/tmux.conf`
+- **AeroSpace**: `~/.config/aerospace/aerospace.toml`
+- **Neovim**: `~/.config/nvim/lua/config/keymaps.lua`
+
+<Note>
+After modifying keybindings:
+- Tmux: Reload with `tmux source-file ~/.config/tmux/tmux.conf`
+- AeroSpace: Press `Alt + Shift + ;` then `Esc` to reload
+- Neovim: Restart Neovim or run `:source ~/.config/nvim/lua/config/keymaps.lua`
+</Note>
+
+## See Also
+
+- [Neovim Keymaps](/neovim/keymaps) - Detailed Neovim keymap configuration
+- [Tmux Configuration](/config/tmux) - Complete tmux setup
+- [AeroSpace Configuration](/config/aerospace) - Window manager setup
